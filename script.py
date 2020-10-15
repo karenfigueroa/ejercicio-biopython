@@ -1,6 +1,5 @@
 from Bio import SeqIO
 from Bio.Seq import Seq
-from Bio.SeqFeature import SeqFeature, FeatureLocation
 from Bio.SeqRecord import SeqRecord
 import os
 
@@ -9,18 +8,19 @@ filename =  "/mnt/c/Users/karen/Desktop/BIOINFORMATICA/biopython-notebook/notebo
 
 # Definición de la función summarize_contents
 def summarize_contents(filename):
+        listaRuta = []
+        listaRuta = os.path.split(filename)
+        print("file:", listaRuta[1], "\npath:", listaRuta[0])
         all_records=[]
         records = list(SeqIO.parse(filename, "genbank"))
-        print ("Path: ", os.path.dirname(filename))
+        #print ("path: ", os.path.dirname(filename))
         print("num_records = %i records" % len(records))
-        print("\n\n")
+        print("records:")
         for seq_record in SeqIO.parse(filename, "genbank"):
                 all_records.append(seq_record.name)
-                print("Name: ", seq_record.name)
-                print("ID:",seq_record.id)
-                print("Location:")
-                for seq_feature in seq_record.features:
-                        print('Start: %d, Stop: %d'%(int(seq_feature.location.start),int(seq_feature.location.end)))
+                print("- id:",seq_record.id)
+                print("name: ", seq_record.name)
+                print("description: ", seq_record.description)
                 print("\n")
         
 # Llamada a la función summarize_contents
