@@ -11,10 +11,9 @@ def summarize_contents(filename):
         listaRuta = os.path.split(filename)
         # File y ruta
         print("file:", listaRuta[1], "\npath:", listaRuta[0])
-        #print ("path: ", os.path.dirname(filename))
+        # Número de registros
         all_records=[]
         records = list(SeqIO.parse(filename, "genbank"))
-        # Número de registros
         print("num_records = %i records" % len(records))
         print("records:")
         # Registros
