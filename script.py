@@ -9,12 +9,15 @@ filename =  "/mnt/c/Users/karen/Desktop/BIOINFORMATICA/biopython-notebook/notebo
 def summarize_contents(filename):
         listaRuta = []
         listaRuta = os.path.split(filename)
+        # File y ruta
         print("file:", listaRuta[1], "\npath:", listaRuta[0])
+        #print ("path: ", os.path.dirname(filename))
         all_records=[]
         records = list(SeqIO.parse(filename, "genbank"))
-        #print ("path: ", os.path.dirname(filename))
+        # Número de registros
         print("num_records = %i records" % len(records))
         print("records:")
+        # Registros
         for seq_record in SeqIO.parse(filename, "genbank"):
                 all_records.append(seq_record.name)
                 print("- id:",seq_record.id)
