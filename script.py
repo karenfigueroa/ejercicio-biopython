@@ -7,22 +7,24 @@ filename =  "/mnt/c/Users/karen/Desktop/BIOINFORMATICA/biopython-notebook/notebo
 
 # Definición de la función summarize_contents
 def summarize_contents(filename):
-        listaRuta = []
-        listaRuta = os.path.split(filename)
-        # File y ruta
-        print("file:", listaRuta[1], "\npath:", listaRuta[0])
-        # Número de registros
-        all_records=[]
-        records = list(SeqIO.parse(filename, "genbank"))
-        print("num_records = %i records" % len(records))
-        print("records:")
-        # Registros
-        for seq_record in SeqIO.parse(filename, "genbank"):
-                all_records.append(seq_record.name)
-                print("- id:",seq_record.id)
-                print("name: ", seq_record.name)
-                print("description: ", seq_record.description)
-                print("\n")
-        
+	listaRuta = []
+	listaRuta = os.path.split(filename)
+	cadena = " "
+	# File y ruta
+	cadena = ("file: "+ listaRuta[1] + "\npath: " + listaRuta[0])
+	# Número de registros
+	all_records=[]
+	records = list(SeqIO.parse(filename, "genbank"))
+	cadena += ("\nnum_records: " + str(len(records)))
+	cadena += ("\nrecords:")
+	# Registros
+	for seq_record in SeqIO.parse(filename, "genbank"):
+		all_records.append(seq_record.name)
+		cadena += ("\n- id:" + str(seq_record.id))
+		cadena += ("\nname: " + seq_record.name)
+		cadena += ("\ndescription: " + str(seq_record.description))
+		cadena += ("\n")
+	return cadena
 # Llamada a la función summarize_contents
-summarize_contents(filename)
+resultado = summarize_contents(filename)
+print(resultado)
