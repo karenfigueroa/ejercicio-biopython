@@ -9,22 +9,25 @@ filename =  "/mnt/c/Users/karen/Desktop/BIOINFORMATICA/biopython-notebook/notebo
 def summarize_contents(filename):
 	listaRuta = []
 	listaRuta = os.path.split(filename)
-	cadena = " "
-	# File y ruta
-	cadena = ("file: "+ listaRuta[1] + "\npath: " + listaRuta[0])
-	# Número de registros
-	all_records=[]
 	records = list(SeqIO.parse(filename, "genbank"))
-	cadena += ("\nnum_records: " + str(len(records)))
-	cadena += ("\nrecords:")
+	# Crear diccionario 
+	diccionario = {}
+	# Nombre del archivo, ruta y número de registros
+	diccionario['file:'] = listaRuta[1]
+	diccionario['path:'] = listaRuta[0]
+	diccionario['num_records:'] = len(records)
+	# Crear listas en diccionario
+	diccionario['names:'] = []
+	diccionario['IDs:'] = []
+	diccionario['descriptions:'] = []
 	# Registros
 	for seq_record in SeqIO.parse(filename, "genbank"):
-		all_records.append(seq_record.name)
-		cadena += ("\n- id:" + str(seq_record.id))
-		cadena += ("\nname: " + seq_record.name)
-		cadena += ("\ndescription: " + str(seq_record.description))
-		cadena += ("\n")
-	return cadena
+		diccionario['names:'].append(seq_record.name)
+		diccionario['IDs:'].append(seq_record.id)
+		diccionario['descriptions:'].append(seq_record.description)
+	return diccionario
+
 # Llamada a la función summarize_contents
-resultado = summarize_contents(filename)
-print(resultado)
+if __name__ == "__main__":
+	resultado = summarize_contents(filename)
+	print(resultado)
