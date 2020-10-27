@@ -2,14 +2,18 @@ from Bio import SeqIO
 from Bio.SeqRecord import SeqRecord
 import os
 
-# Archivo .gbk de mi escritorio, cambiar a la dirección del nuevo archivo .gbk a leer
-filename =  "/mnt/c/Users/karen/Desktop/BIOINFORMATICA/biopython-notebook/notebooks/data/ls_orchid.gbk"
+filename =  os.path.abspath("data/ls_orchid.gbk")
 
 # Definición de la función summarize_contents
 def summarize_contents(filename):
-	listaRuta = []
 	listaRuta = os.path.split(filename)
-	records = list(SeqIO.parse(filename, "genbank"))
+	extension = os.path.splitext(filename)
+	# Tipo de archivo genbank o fasta 
+	if(extension[1] == ".gbk"):
+		tfile = "genbank"
+	else: 
+		tfile = "fasta"
+	records = list(SeqIO.parse(filename, tfile))
 	# Crear diccionario 
 	diccionario = {}
 	# Nombre del archivo, ruta y número de registros
@@ -21,7 +25,7 @@ def summarize_contents(filename):
 	diccionario['IDs:'] = []
 	diccionario['descriptions:'] = []
 	# Registros
-	for seq_record in SeqIO.parse(filename, "genbank"):
+	for seq_record in SeqIO.parse(filename, tfile):
 		diccionario['names:'].append(seq_record.name)
 		diccionario['IDs:'].append(seq_record.id)
 		diccionario['descriptions:'].append(seq_record.description)
