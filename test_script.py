@@ -1,6 +1,7 @@
 import unittest
 import script
 import os
+from Bio.Seq import Seq
 
 # Creación de clase de prueba de unidad
 class MiPrueba(unittest.TestCase):
@@ -30,3 +31,24 @@ class MiPrueba(unittest.TestCase):
 		opuntia = {'file:': 'opuntia.fasta', 'path:': os.path.abspath('data'), 'num_records:': 7, 'names:': ['gi|6273291|gb|AF191665.1|AF191665', 'gi|6273290|gb|AF191664.1|AF191664', 'gi|6273289|gb|AF191663.1|AF191663', 'gi|6273287|gb|AF191661.1|AF191661', 'gi|6273286|gb|AF191660.1|AF191660', 'gi|6273285|gb|AF191659.1|AF191659', 'gi|6273284|gb|AF191658.1|AF191658'], 'IDs:': ['gi|6273291|gb|AF191665.1|AF191665', 'gi|6273290|gb|AF191664.1|AF191664', 'gi|6273289|gb|AF191663.1|AF191663', 'gi|6273287|gb|AF191661.1|AF191661', 'gi|6273286|gb|AF191660.1|AF191660', 'gi|6273285|gb|AF191659.1|AF191659', 'gi|6273284|gb|AF191658.1|AF191658'], 'descriptions:': ['gi|6273291|gb|AF191665.1|AF191665 Opuntia marenae rpl16 gene; chloroplast gene for chloroplast product, partial intron sequence', 'gi|6273290|gb|AF191664.1|AF191664 Opuntia clavata rpl16 gene; chloroplast gene for chloroplast product, partial intron sequence', 'gi|6273289|gb|AF191663.1|AF191663 Opuntia bradtiana rpl16 gene; chloroplast gene for chloroplast product, partial intron sequence', 'gi|6273287|gb|AF191661.1|AF191661 Opuntia kuehnrichiana rpl16 gene; chloroplast gene for chloroplast product, partial intron sequence', 'gi|6273286|gb|AF191660.1|AF191660 Opuntia echinacea rpl16 gene; chloroplast gene for chloroplast product, partial intron sequence', 'gi|6273285|gb|AF191659.1|AF191659 Opuntia pachypus rpl16 gene; chloroplast gene for chloroplast product, partial intron sequence', 'gi|6273284|gb|AF191658.1|AF191658 Opuntia subulata rpl16 gene; chloroplast gene for chloroplast product, partial intron sequence']}
 		s = script.summarize_contents(os.path.abspath("data/opuntia.fasta"))
 		self.assertDictEqual(opuntia, s)
+
+	def test_concatenate_and_get_reverse_of_complement(self):
+		ejemplo_1 = Seq("CTGACTCTATCGGGCACCCTTTCAGCGGCCCATTACAATGGCCAT")
+		r = script.concatenate_and_get_reverse_of_complement("ATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAG", "AGTCAG")
+		self.assertEqual(ejemplo_1, r)
+
+		ejemplo_2 = Seq("ATACCTAGACTTACTATGACTACT")
+		r = script.concatenate_and_get_reverse_of_complement("AGTagtcatAGta", "AGTCTAGGTAT")
+		self.assertEqual(ejemplo_2, r)
+
+		ejemplo_3 = Seq("TAGACAGACTAGCATTAGACT")
+		r = script.concatenate_and_get_reverse_of_complement("agtct", "AATGCTAGTCTGTCTA")
+		self.assertEqual(ejemplo_3, r)
+
+		ejemplo_4 = Seq("CATTCGACTACTAGCTCCTAGATAGAC")
+		r = script.concatenate_and_get_reverse_of_complement("gtctatctagg", "agctagtagtcgaatg")
+		self.assertEqual(ejemplo_4, r)
+
+		ejemplo_5 = Seq("GATCGATC")
+		r = script.concatenate_and_get_reverse_of_complement("GATC", "GATC")
+		self.assertEqual(ejemplo_5, r)

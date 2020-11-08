@@ -41,9 +41,8 @@ def concatenate_and_get_reverse_of_complement(sec1, sec2):
 if __name__ == "__main__":
 	filename =  os.path.abspath("data/ls_orchid.gbk")
 	secuencia_1 = "ATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAG"
-	secuencia_2 = "AGTCTGGGATAGCTATCGTAA"
+	secuencia_2 = "AGTCAG"
 	resultado = summarize_contents(filename)
 	print("Resultado summarize_contents:\n", resultado)
 	resultado = concatenate_and_get_reverse_of_complement(secuencia_1, secuencia_2)
 	print("\nResultado concatenate_and_get_reverse_of_complement:\n", resultado)
-
