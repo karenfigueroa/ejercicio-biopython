@@ -52,3 +52,11 @@ class MiPrueba(unittest.TestCase):
 		ejemplo_5 = Seq("GATCGATC")
 		r = script.concatenate_and_get_reverse_of_complement("GATC", "GATC")
 		self.assertEqual(ejemplo_5, r)
+
+		ejemplo_6 = Seq("  ")
+		r = script.concatenate_and_get_reverse_of_complement(" ", " ")
+		self.assertEqual(ejemplo_6, r)
+
+		self.assertRaises(Exception, script.concatenate_and_get_reverse_of_complement, None, None)
+		self.assertRaises(Bio.Seq.TranslationError, script.concatenate_and_get_reverse_of_complement, "AGT A", "AGT AT")
+		self.assertRaises(Exception, script.concatenate_and_get_reverse_of_complement, "hoLa", "no ATGC")
