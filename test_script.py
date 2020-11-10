@@ -68,22 +68,18 @@ class MiPrueba(unittest.TestCase):
 		ejemplo_2 = {'mRNA': Seq('GUUUAAAUGAUGAUG'), 'proteins': [Seq('MMM')], 'stop_codons': 'Not found stop codons'}
 		r = script.print_protein_and_codons_using_standard_table("GTTTAAATGATGATG")
 		self.assertEqual(ejemplo_2, r)
-
-		ejemplo_3 =  {'mRNA': Seq(''), 'proteins': 'Not found proteins', 'stop_codons': 'Not found stop codons'}
-		r = script.print_protein_and_codons_using_standard_table("")
-		self.assertEqual(ejemplo_3, r)
 		
-		ejemplo_4 =   {'mRNA': Seq('UUGAGGUGGUUGAUGUAAUAAUUUAUGAUGCACCGUUGAUGAAAA'), 'proteins': [Seq('LRWLM'), Seq('MMHR')], 'stop_codons': [Seq('TAA'), Seq('TGA')]}
+		ejemplo_3 =   {'mRNA': Seq('UUGAGGUGGUUGAUGUAAUAAUUUAUGAUGCACCGUUGAUGAAAA'), 'proteins': [Seq('LRWLM'), Seq('MMHR')], 'stop_codons': [Seq('TAA'), Seq('TGA')]}
 		r = script.print_protein_and_codons_using_standard_table("TTGAGGTGGTTGATGTAATAATTTATGATGCACCGTTGATGAAAA")
+		self.assertEqual(ejemplo_3, r)
+
+		ejemplo_4 = {'mRNA': Seq('CCGAUGAUCUAA'), 'proteins': [Seq('MI')], 'stop_codons': [Seq('TAA')]}
+		r = script.print_protein_and_codons_using_standard_table("ccgATGatctaA")
 		self.assertEqual(ejemplo_4, r)
 
-		ejemplo_5 = {'mRNA': Seq('CCGAUGAUCUAA'), 'proteins': [Seq('MI')], 'stop_codons': [Seq('TAA')]}
-		r = script.print_protein_and_codons_using_standard_table("ccgATGatctaA")
-		self.assertEqual(ejemplo_5, r)
-
-		ejemplo_6 = {'mRNA': Seq('CCGCAUUGCAUAAAA'), 'proteins': 'Not found proteins', 'stop_codons': 'Not found stop codons'}
+		ejemplo_5 = {'mRNA': Seq('CCGCAUUGCAUAAAA'), 'proteins': 'Not found proteins', 'stop_codons': 'Not found stop codons'}
 		r = script.print_protein_and_codons_using_standard_table("CCGCATTGCATAAAA")
-		self.assertEqual(ejemplo_6, r)
+		self.assertEqual(ejemplo_5, r)
 
 		self.assertRaises(Exception, script.print_protein_and_codons_using_standard_table, None)
 		self.assertRaises(Exception, script.print_protein_and_codons_using_standard_table, "klmnwzq")
@@ -97,18 +93,14 @@ class MiPrueba(unittest.TestCase):
 		ejemplo_2 = {'mRNA': Seq('UUUUAAAUGCUGCGGAAAAUAACC'), 'proteins': [Seq('MTRKMT')], 'stop_codons': 'Not found stop codons'}
 		r = script.print_proteins_and_codons_using_mitocondrial_yeast_table("TTTTAAATGCTGCGGAAAATAACC")
 		self.assertEqual(ejemplo_2, r)
-
-		ejemplo_3 = {'mRNA': Seq(''), 'proteins': 'Not found proteins', 'stop_codons': 'Not found stop codons'}
-		r = script.print_proteins_and_codons_using_mitocondrial_yeast_table("")
-		self.assertEqual(ejemplo_3, r)
 		
-		ejemplo_4 = {'mRNA': Seq('GUUACAACCCUUGCUGGA'), 'proteins': 'Not found proteins', 'stop_codons': 'Not found stop codons'}
+		ejemplo_3 = {'mRNA': Seq('GUUACAACCCUUGCUGGA'), 'proteins': 'Not found proteins', 'stop_codons': 'Not found stop codons'}
 		r = script.print_proteins_and_codons_using_mitocondrial_yeast_table("GTTACAACCCTTGCTGGA")
-		self.assertEqual(ejemplo_4, r)
+		self.assertEqual(ejemplo_3, r)
 
-		ejemplo_5 = {'mRNA': Seq('GUGAUAGUUUAACCGAUGACAUAGCUC'), 'proteins': [Seq('VMV'), Seq('MT')], 'stop_codons': [Seq('TAA'), Seq('TAG')]}
+		ejemplo_4 = {'mRNA': Seq('GUGAUAGUUUAACCGAUGACAUAGCUC'), 'proteins': [Seq('VMV'), Seq('MT')], 'stop_codons': [Seq('TAA'), Seq('TAG')]}
 		r = script.print_proteins_and_codons_using_mitocondrial_yeast_table("gtGatagtttaAccgatGACATaGCtC")
-		self.assertEqual(ejemplo_5, r)
+		self.assertEqual(ejemplo_4, r)
 
 		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, None)
 		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, "estoO es una pruebA")
