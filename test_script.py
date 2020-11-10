@@ -53,8 +53,8 @@ class MiPrueba(unittest.TestCase):
 		r = script.concatenate_and_get_reverse_of_complement("GATC", "GATC")
 		self.assertEqual(ejemplo_5, r)
 
-		ejemplo_6 = Seq("  ")
-		r = script.concatenate_and_get_reverse_of_complement(" ", " ")
+		ejemplo_6 = Seq("")
+		r = script.concatenate_and_get_reverse_of_complement("", "")
 		self.assertEqual(ejemplo_6, r)
 
 		self.assertRaises(Exception, script.concatenate_and_get_reverse_of_complement, None, None)
