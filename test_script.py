@@ -58,5 +58,4 @@ class MiPrueba(unittest.TestCase):
 		self.assertEqual(ejemplo_6, r)
 
 		self.assertRaises(Exception, script.concatenate_and_get_reverse_of_complement, None, None)
-		self.assertRaises(Bio.Seq.TranslationError, script.concatenate_and_get_reverse_of_complement, "AGT A", "AGT AT")
-		self.assertRaises(Exception, script.concatenate_and_get_reverse_of_complement, "hoLa", "no ATGC")
+		self.assertRaises(Exception, script.concatenate_and_get_reverse_of_complement, "ATG A", "holakaren figueroa")
