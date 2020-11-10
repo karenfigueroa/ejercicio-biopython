@@ -53,7 +53,6 @@ def solve_dictionary(secuencia, num_table):
 	codons_table = CodonTable.unambiguous_dna_by_id[num_table]
 	start_codons_list = codons_table.start_codons
 	stop_codons_list = codons_table.stop_codons
-	print(start_codons_list, stop_codons_list)
 	start_codon, stop_codon = False, False
 	pos_inicio, pos_final = None, None
 	i = 0
@@ -120,7 +119,7 @@ if __name__ == "__main__":
 	print("\nResultado concatenate_and_get_reverse_of_complement:\n", resultado)
 
 	resultado = print_protein_and_codons_using_standard_table(secuencia_2)
-	#print("\nResultado print_protein_and_codons_using_standard_table:\n", resultado)
+	print("\nResultado print_protein_and_codons_using_standard_table:\n", resultado)
 	
 	resultado = print_proteins_and_codons_using_mitocondrial_yeast_table(secuencia_2)
 	print("\nResultado print_proteins_and_codons_using_mitocondrial_yeast_table:\n", resultado)
