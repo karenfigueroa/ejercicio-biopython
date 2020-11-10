@@ -88,3 +88,28 @@ class MiPrueba(unittest.TestCase):
 		self.assertRaises(Exception, script.print_protein_and_codons_using_standard_table, None)
 		self.assertRaises(Exception, script.print_protein_and_codons_using_standard_table, "klmnwzq")
 		self.assertRaises(Exception, script.print_protein_and_codons_using_standard_table, "ATG GAA TAA")
+
+	def test_print_proteins_and_codons_using_mitocondrial_yeast_table(self):
+		ejemplo_1 = {'mRNA': Seq('AUAAUAAUGGUGGGGUAAUAGUAAGUGAAAAAAUAGCUUUUU'), 'proteins': [Seq('MMMVG'), Seq('VKK')], 'stop_codons': [Seq('TAA'), Seq('TAG')]}
+		r = script.print_proteins_and_codons_using_mitocondrial_yeast_table("ATAATAATGGTGGGGTAATAGTAAGTGAAAAAATAGCTTTTT")
+		self.assertEqual(ejemplo_1, r)
+
+		ejemplo_2 = {'mRNA': Seq('UUUUAAAUGCUGCGGAAAAUAACC'), 'proteins': [Seq('MTRKMT')], 'stop_codons': 'Not found stop codons'}
+		r = script.print_proteins_and_codons_using_mitocondrial_yeast_table("TTTTAAATGCTGCGGAAAATAACC")
+		self.assertEqual(ejemplo_2, r)
+
+		ejemplo_3 = {'mRNA': Seq(''), 'proteins': 'Not found proteins', 'stop_codons': 'Not found stop codons'}
+		r = script.print_proteins_and_codons_using_mitocondrial_yeast_table("")
+		self.assertEqual(ejemplo_3, r)
+		
+		ejemplo_4 = {'mRNA': Seq('GUUACAACCCUUGCUGGA'), 'proteins': 'Not found proteins', 'stop_codons': 'Not found stop codons'}
+		r = script.print_proteins_and_codons_using_mitocondrial_yeast_table("GTTACAACCCTTGCTGGA")
+		self.assertEqual(ejemplo_4, r)
+
+		ejemplo_5 = {'mRNA': Seq('GUGAUAGUUUAACCGAUGACAUAGCUC'), 'proteins': [Seq('VMV'), Seq('MT')], 'stop_codons': [Seq('TAA'), Seq('TAG')]}
+		r = script.print_proteins_and_codons_using_mitocondrial_yeast_table("gtGatagtttaAccgatGACATaGCtC")
+		self.assertEqual(ejemplo_5, r)
+
+		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, None)
+		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, "estoO es una pruebA")
+		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, "ATGAAATGA TAG")
