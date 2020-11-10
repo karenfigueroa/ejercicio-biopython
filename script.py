@@ -43,7 +43,7 @@ def solve_dictionary(secuencia, num_table):
 	# Crea diccionario
 	diccionario = {}
 	# mRNA, proteínas y codones de paro
-	diccionario['mRNA'] = secuencia.transcribe()
+	diccionario['mRNA'] = secuencia.transcribe().upper()
 	diccionario['proteins'] = []
 	diccionario['stop_codons'] = []
 	
@@ -69,7 +69,7 @@ def solve_dictionary(secuencia, num_table):
 					stop_codon = True
 					pos_final = j
 					diccionario['proteins'].append(aminoacidos[i:j])
-					diccionario['stop_codons'].append(secuencia[j*3:j*3+3])
+					diccionario['stop_codons'].append(secuencia[j*3:j*3+3].upper())
 					start_codon, stop_codon = False, False
 					i = j
 					break
@@ -101,12 +101,12 @@ def print_protein_and_codons_using_standard_table(sec):
 if __name__ == "__main__":
 	filename =  os.path.abspath("data/ls_orchid.gbk")
 	secuencia_1 = "ATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAG"
-	secuencia_2 = "ATG"
+	secuencia_2 = "CCGCATTGCATAAAA"
 	resultado = summarize_contents(filename)
 	print("Resultado summarize_contents:\n", resultado)
 
 	resultado = concatenate_and_get_reverse_of_complement(secuencia_1, secuencia_2)
 	print("\nResultado concatenate_and_get_reverse_of_complement:\n", resultado)
 
-	resultado = print_protein_and_codons_using_standard_table(secuencia_1)
+	resultado = print_protein_and_codons_using_standard_table(secuencia_2)
 	print("\nResultado print_protein_and_codons_using_standard_table:\n", resultado)

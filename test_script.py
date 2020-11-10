@@ -59,3 +59,32 @@ class MiPrueba(unittest.TestCase):
 
 		self.assertRaises(Exception, script.concatenate_and_get_reverse_of_complement, None, None)
 		self.assertRaises(Exception, script.concatenate_and_get_reverse_of_complement, "ATG A", "holakaren figueroa")
+
+	def test_print_protein_and_codons_using_standard_table(self):
+		ejemplo_1 = {'mRNA': Seq('AUGGCCAUUGUAAUGGGCCGCUGAAAGGGUGCCCGAUAG'), 'proteins': [Seq('MAIVMGR')], 'stop_codons': [Seq('TGA')]}
+		r = script.print_protein_and_codons_using_standard_table("ATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAG")
+		self.assertEqual(ejemplo_1, r)
+
+		ejemplo_2 = {'mRNA': Seq('GUUUAAAUGAUGAUG'), 'proteins': [Seq('MMM')], 'stop_codons': 'Not found stop codons'}
+		r = script.print_protein_and_codons_using_standard_table("GTTTAAATGATGATG")
+		self.assertEqual(ejemplo_2, r)
+
+		ejemplo_3 =  {'mRNA': Seq(''), 'proteins': 'Not found proteins', 'stop_codons': 'Not found stop codons'}
+		r = script.print_protein_and_codons_using_standard_table("")
+		self.assertEqual(ejemplo_3, r)
+		
+		ejemplo_4 =   {'mRNA': Seq('UUGAGGUGGUUGAUGUAAUAAUUUAUGAUGCACCGUUGAUGAAAA'), 'proteins': [Seq('LRWLM'), Seq('MMHR')], 'stop_codons': [Seq('TAA'), Seq('TGA')]}
+		r = script.print_protein_and_codons_using_standard_table("TTGAGGTGGTTGATGTAATAATTTATGATGCACCGTTGATGAAAA")
+		self.assertEqual(ejemplo_4, r)
+
+		ejemplo_5 = {'mRNA': Seq('CCGAUGAUCUAA'), 'proteins': [Seq('MI')], 'stop_codons': [Seq('TAA')]}
+		r = script.print_protein_and_codons_using_standard_table("ccgATGatctaA")
+		self.assertEqual(ejemplo_5, r)
+
+		ejemplo_6 = {'mRNA': Seq('CCGCAUUGCAUAAAA'), 'proteins': 'Not found proteins', 'stop_codons': 'Not found stop codons'}
+		r = script.print_protein_and_codons_using_standard_table("CCGCATTGCATAAAA")
+		self.assertEqual(ejemplo_6, r)
+
+		self.assertRaises(Exception, script.print_protein_and_codons_using_standard_table, None)
+		self.assertRaises(Exception, script.print_protein_and_codons_using_standard_table, "klmnwzq")
+		self.assertRaises(Exception, script.print_protein_and_codons_using_standard_table, "ATG GAA TAA")
