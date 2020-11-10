@@ -53,6 +53,7 @@ def solve_dictionary(secuencia, num_table):
 	codons_table = CodonTable.unambiguous_dna_by_id[num_table]
 	start_codons_list = codons_table.start_codons
 	stop_codons_list = codons_table.stop_codons
+	print(start_codons_list, stop_codons_list)
 	start_codon, stop_codon = False, False
 	pos_inicio, pos_final = None, None
 	i = 0
@@ -97,11 +98,21 @@ def print_protein_and_codons_using_standard_table(sec):
 	diccionario = solve_dictionary(secuencia, 1)
 	return diccionario
 
+# Definición de la función print_proteins_and_codons_using_mitocondrial_yeast_table()
+def print_proteins_and_codons_using_mitocondrial_yeast_table(sec):
+	# Convertir secuencia en objeto Seq
+	secuencia = Seq(sec)	
+	# Crea diccionario
+	diccionario = {}
+	# Guarda el diccionario resuelto por la función solve_dictionary
+	diccionario = solve_dictionary(secuencia, 3)
+	return diccionario
+
 # Llamada a las funciones
 if __name__ == "__main__":
 	filename =  os.path.abspath("data/ls_orchid.gbk")
 	secuencia_1 = "ATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAG"
-	secuencia_2 = "CCGCATTGCATAAAA"
+	secuencia_2 = "ATAATAATGGTGGGGTAATAGTAAGTGAAAAAATAGCTTTTT"
 	resultado = summarize_contents(filename)
 	print("Resultado summarize_contents:\n", resultado)
 
@@ -109,4 +120,7 @@ if __name__ == "__main__":
 	print("\nResultado concatenate_and_get_reverse_of_complement:\n", resultado)
 
 	resultado = print_protein_and_codons_using_standard_table(secuencia_2)
-	print("\nResultado print_protein_and_codons_using_standard_table:\n", resultado)
+	#print("\nResultado print_protein_and_codons_using_standard_table:\n", resultado)
+	
+	resultado = print_proteins_and_codons_using_mitocondrial_yeast_table(secuencia_2)
+	print("\nResultado print_proteins_and_codons_using_mitocondrial_yeast_table:\n", resultado)
