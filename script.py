@@ -54,12 +54,10 @@ def solve_dictionary(secuencia, num_table):
 	start_codons_list = codons_table.start_codons
 	stop_codons_list = codons_table.stop_codons
 	start_codon, stop_codon = False, False
-	pos_inicio, pos_final = None, None
 	i = 0
 	while i < len(aminoacidos):
 		if secuencia[i*3:i*3+3].upper() in start_codons_list:
 			start_codon = True
-			pos_inicio = i
 			if i+1 == len(aminoacidos):
 				diccionario['proteins'].append(aminoacidos[i:])
 				break
@@ -67,7 +65,6 @@ def solve_dictionary(secuencia, num_table):
 			while j < len(aminoacidos):
 				if secuencia[j*3:j*3+3].upper() in stop_codons_list:
 					stop_codon = True
-					pos_final = j
 					diccionario['proteins'].append(aminoacidos[i:j])
 					diccionario['stop_codons'].append(secuencia[j*3:j*3+3].upper())
 					start_codon, stop_codon = False, False
