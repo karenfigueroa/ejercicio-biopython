@@ -1,7 +1,9 @@
 import unittest
 import script
 import os
+import glob
 from Bio.Seq import Seq
+from Bio import SeqIO
 
 # Creación de clase de prueba de unidad
 class MiPrueba(unittest.TestCase):
@@ -105,3 +107,25 @@ class MiPrueba(unittest.TestCase):
 		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, None)
 		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, "estoO es una pruebA")
 		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, "ATGAAATGA TAG")
+
+	def test_extract_sequences(self):
+		direccion = os.path.abspath("data/sequences.fasta")
+		records = list(SeqIO.parse(direccion, "fasta"))
+		num_records = len(records)
+		path = os.path.abspath("ejercicio-biopython")
+		head_tail = os.path.split(path)
+		head = head_tail[0]
+		script.extract_sequences("data/sequences.fasta")  
+		num_archivos_generados = len(glob.glob1(head, "sequence*.fasta"))
+
+		# Corrobora que el número de archivos generados sea igual al número de records contenidos en el archivo leído
+		self.assertEqual(num_archivos_generados, num_records)
+
+		for i in range(num_records):
+			secuencia = str(records[i].seq)
+			archivo = open(f"sequence{i+1}.fasta", "r") 
+			secuencia_tst = str(archivo.read())
+			archivo.close()
+			self.assertEqual(secuencia, secuencia_tst)
+
+			
