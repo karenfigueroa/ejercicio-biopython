@@ -121,8 +121,9 @@ class MiPrueba(unittest.TestCase):
 		# Corrobora que el número de archivos generados sea igual al número de records contenidos en el archivo leído
 		self.assertEqual(num_archivos_generados, num_records)
 
+		# Corrobora el contenido de cada archivo generado con cada record del archivo leído
 		for i in range(num_records):
-			secuencia = str(records[i].seq)
+			secuencia = str('>' + records[i].id) + "\n" + str(records[i].seq)
 			archivo = open(f"sequence{i+1}.fasta", "r") 
 			secuencia_tst = str(archivo.read())
 			archivo.close()
