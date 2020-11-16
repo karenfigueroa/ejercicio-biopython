@@ -104,6 +104,16 @@ def print_proteins_and_codons_using_mitocondrial_yeast_table(sec):
 	diccionario = solve_dictionary(secuencia, 3)
 	return diccionario
 
+#Definición de la función extract_sequences():
+def extract_sequences(file):
+	direccion = os.path.abspath(file)
+	records = list(SeqIO.parse(direccion, "fasta"))
+	for i in range(len(records)):
+		filename = open(f"sequence{i+1}.fasta", "w")
+		# filename.write('>' + records[i].description + os.linesep)
+		filename.write(str(records[i].seq))
+		filename.close()
+
 # Llamada a las funciones
 if __name__ == "__main__":
 	filename =  os.path.abspath("data/ls_orchid.gbk")
@@ -120,3 +130,5 @@ if __name__ == "__main__":
 	
 	resultado = print_proteins_and_codons_using_mitocondrial_yeast_table(secuencia_2)
 	print("\nResultado print_proteins_and_codons_using_mitocondrial_yeast_table:\n", resultado)
+
+	extract_sequences("data/m_cold.fasta")
