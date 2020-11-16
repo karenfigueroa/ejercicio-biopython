@@ -110,7 +110,7 @@ def extract_sequences(file):
 	records = list(SeqIO.parse(direccion, "fasta"))
 	for i in range(len(records)):
 		filename = open(f"sequence{i+1}.fasta", "w")
-		# filename.write('>' + records[i].description + os.linesep)
+		filename.write('>' + records[i].id + os.linesep)
 		filename.write(str(records[i].seq))
 		filename.close()
 
