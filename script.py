@@ -105,14 +105,31 @@ def print_proteins_and_codons_using_mitocondrial_yeast_table(sec):
 	return diccionario
 
 #Definición de la función extract_sequences():
-def extract_sequences(file):
-	direccion = os.path.abspath(file)
-	records = list(SeqIO.parse(direccion, "fasta"))
-	for i in range(len(records)):
-		filename = open(f"sequence{i+1}.fasta", "w")
-		filename.write('>' + records[i].id + os.linesep)
-		filename.write(str(records[i].seq))
-		filename.close()
+def extract_sequences(file, format):
+	# Parte 2 ejercicio 4
+	#direccion = os.path.abspath(file)
+	#records = list(SeqIO.parse(direccion, "fasta"))
+	#for i in range(len(records)):
+	#	filename = open(f"sequence{i+1}.fasta", "w")
+	#	filename.write('>' + records[i].id + os.linesep)
+	#	filename.write(str(records[i].seq))
+	#	filename.close()
+
+	# Parte 3 ejercicio 4
+	root_ext = os.path.splitext(file)
+	if root_ext[1] == ".fasta" and format.lower() == "genbank":  
+		# Convierte archivo fasta a genbank
+		SeqIO.convert(file, "fasta", "my_example.gbk", "genbank", molecule_type = "DNA")
+		direccion = os.path.abspath("my_example.gbk")
+		records = list(SeqIO.parse(direccion, "genbank"))
+		for i in range(len(records)):
+			filename = open(f"sequence{i+1}.gbk", "w")
+			filename.write(str(records[i].format("genbank")))
+			filename.close()
+		os.remove("my_example.gbk")
+	else: 
+		# Lanza error ya que sólo se reciben archivos .fasta y se generan en formato .gbk
+		print("Error: this program can only convert .fasta files to N files in .genbank format")
 
 # Llamada a las funciones
 if __name__ == "__main__":
@@ -131,4 +148,4 @@ if __name__ == "__main__":
 	resultado = print_proteins_and_codons_using_mitocondrial_yeast_table(secuencia_2)
 	print("\nResultado print_proteins_and_codons_using_mitocondrial_yeast_table:\n", resultado)
 
-	extract_sequences("data/m_cold.fasta")
+	extract_sequences("data/sequences.fasta", "genbank")
