@@ -109,24 +109,42 @@ class MiPrueba(unittest.TestCase):
 		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, "ATGAAATGA TAG")
 
 	def test_extract_sequences(self):
-		direccion = os.path.abspath("data/sequences.fasta")
-		records = list(SeqIO.parse(direccion, "fasta"))
+		# Convierte archivo fasta a genbank
+		SeqIO.convert("data/sequences.fasta", "fasta", "my_example.gbk", "genbank", molecule_type = "DNA")
+		direccion = os.path.abspath("my_example.gbk")
+		records = list(SeqIO.parse(direccion, "genbank"))
+		os.remove("my_example.gbk")
 		num_records = len(records)
 		path = os.path.abspath("ejercicio-biopython")
 		head_tail = os.path.split(path)
 		head = head_tail[0]
-		script.extract_sequences("data/sequences.fasta")  
-		num_archivos_generados = len(glob.glob1(head, "sequence*.fasta"))
+		script.extract_sequences("data/sequences.fasta", "genbank")  
+		num_archivos_generados = len(glob.glob1(head, "sequence*.gbk"))
 
 		# Corrobora que el número de archivos generados sea igual al número de records contenidos en el archivo leído
 		self.assertEqual(num_archivos_generados, num_records)
 
 		# Corrobora el contenido de cada archivo generado con cada record del archivo leído
 		for i in range(num_records):
-			secuencia = str('>' + records[i].id) + "\n" + str(records[i].seq)
-			archivo = open(f"sequence{i+1}.fasta", "r") 
+			secuencia = str(records[i].format("genbank"))
+			archivo = open(f"sequence{i+1}.gbk", "r") 
 			secuencia_tst = str(archivo.read())
 			archivo.close()
 			self.assertEqual(secuencia, secuencia_tst)
 
-			
+		# Casos de prueba
+		ejemplo_1 = "Error: this program can only convert .fasta files to N files in .genbank format"
+		r = script.extract_sequences("data/ls_orchid.gbk", "fasta")
+		self.assertEqual(ejemplo_1, r)
+
+		ejemplo_2 = "Error: this program can only convert .fasta files to N files in .genbank format"
+		r = script.extract_sequences("data/sequences.fasta", "fastq")
+		self.assertEqual(ejemplo_2, r)
+
+		ejemplo_3 = "Error: this program can only convert .fasta files to N files in .genbank format"
+		r = script.extract_sequences("data/sequences.fasta", "")
+		self.assertEqual(ejemplo_3, r)
+	
+		self.assertRaises(Exception, script.extract_sequences, None, None)
+		self.assertRaises(Exception, script.extract_sequences, None, "genbank")
+		self.assertRaises(Exception, script.extract_sequences, "data/sequences.fasta", None)
