@@ -129,7 +129,7 @@ def extract_sequences(file, format):
 		os.remove("my_example.gbk")
 	else: 
 		# Lanza error ya que sólo se reciben archivos .fasta y se generan en formato .gbk
-		print("Error: this program can only convert .fasta files to N files in .genbank format")
+		return "Error: this program can only convert .fasta files to N files in .genbank format"
 
 # Llamada a las funciones
 if __name__ == "__main__":
