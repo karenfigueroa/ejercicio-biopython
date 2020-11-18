@@ -131,6 +131,11 @@ class MiPrueba(unittest.TestCase):
 			secuencia_tst = str(archivo.read())
 			archivo.close()
 			self.assertEqual(secuencia, secuencia_tst)
+		
+		# Borra los archivos generados para la prueba ya que no se necesitan
+		files = glob.glob1(head, "sequence*.gbk")
+		for filename in files:
+			os.remove(filename)
 
 		# Casos de prueba
 		ejemplo_1 = "Error: this program can only convert .fasta files to N files in .genbank format"
