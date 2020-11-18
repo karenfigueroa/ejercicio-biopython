@@ -131,6 +131,19 @@ def extract_sequences(file, format):
 		# Lanza error ya que sólo se reciben archivos .fasta y se generan en formato .gbk
 		return "Error: this program can only convert .fasta files to N files in .genbank format"
 
+# Definición de la función extract_sequences_revcomp():
+def extract_sequences_revcomp(file):
+	root_ext = os.path.splitext(file)
+	if root_ext[1] == ".fasta":
+		direccion = os.path.abspath(file)
+		records = list(SeqIO.parse(direccion, "fasta"))
+		filename = open("reverse_complement.fasta", "w")
+		for i in range(len(records)):
+			filename.write(str(records[i].reverse_complement(id = True).format("fasta")))
+		filename.close()
+	else:
+		return "Error: the only file format allowed is .fasta"
+
 # Llamada a las funciones
 if __name__ == "__main__":
 	filename =  os.path.abspath("data/ls_orchid.gbk")
@@ -149,3 +162,5 @@ if __name__ == "__main__":
 	print("\nResultado print_proteins_and_codons_using_mitocondrial_yeast_table:\n", resultado)
 
 	extract_sequences("data/sequences.fasta", "genbank")
+
+	extract_sequences_revcomp("data/sequences.fasta")
