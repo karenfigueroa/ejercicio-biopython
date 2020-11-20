@@ -153,3 +153,31 @@ class MiPrueba(unittest.TestCase):
 		self.assertRaises(Exception, script.extract_sequences, None, None)
 		self.assertRaises(Exception, script.extract_sequences, None, "genbank")
 		self.assertRaises(Exception, script.extract_sequences, "data/sequences.fasta", None)
+
+	def test_extract_sequences_revcomp(self):
+		script.extract_sequences_revcomp("data/sequences.fasta") 
+		direccion = os.path.abspath("data/sequences.fasta")
+		records = list(SeqIO.parse(direccion, "fasta")) 
+		num_records = len(records)
+		# Records del archivo generado al ejecutar la función 
+		direccion = os.path.abspath("reverse_complement.fasta")
+		records_tst = list(SeqIO.parse(direccion, "fasta"))
+		num_records_tst = len(records_tst)
+		# Corrobora número de records generados con los del archivo leído
+		self.assertEqual(num_records, num_records_tst)
+
+		# Corrobora el contenido del archivo generado con cada record del archivo leído
+		reverso_complementario = ""
+		archivo = open("reverse_complement.fasta", "r") 
+		for i in range(len(records)):
+			reverso_complementario += str(records[i].reverse_complement(id = True).format("fasta"))
+		reverso_complementario_tst = str(archivo.read())
+		self.assertEqual(reverso_complementario, reverso_complementario_tst)
+		archivo.close()
+		os.remove("reverse_complement.fasta")
+
+		# Casos de prueba
+		ejemplo_1 = "Error: the only file format allowed is .fasta"
+		r = script.extract_sequences_revcomp("data/ls_orchid.gbk")
+		self.assertEqual(ejemplo_1, r)
+		self.assertRaises(Exception, script.extract_sequences_revcomp, None)
